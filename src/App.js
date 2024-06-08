@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import "./App.css"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import AddProductForm from './components/addProductForm'
+import ViewProduct from './components/viewProduct'
+import UpdateProductForm from './components/UpdateProductForm'
+import { useSelector } from 'react-redux'
+import Auth from './components/authentication/auth'
 
-function App() {
+
+
+const App = () => {
+
+  const isAuth = useSelector((state) => state.user.isAuth)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div className='navbar'><p>Navbar</p></div>
+      <hr />
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={isAuth ? <ViewProduct /> : <Auth />} />
+          <Route path='/addProduct' element={<AddProductForm />} />
+          <Route path='/UpdateProduct' element={<UpdateProductForm />} />
+          <Route path='/viewAllProduct' element={<ViewProduct />} />
+
+        </Routes>
+
+      </BrowserRouter>
+
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
